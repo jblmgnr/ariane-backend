@@ -7,7 +7,7 @@ const uid2 = require("uid2");
 const bcrypt = require("bcrypt");
 
 //===============================================================
-// POST : signUp
+// POST : signin
 //===============================================================
 router.post("/signup", (req, res) => {
   const checkStatus = checkBody(req.body, [
@@ -42,6 +42,38 @@ router.post("/signup", (req, res) => {
       newUser.save().then((data) => {
         res.json({ result: true, token: data.token });
       });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.json({ result: false, error: "While accessing MongoDB Database" });
+    });
+});
+
+//===============================================================
+// POST : signin
+//===============================================================
+router.post("/signin", (req, res) => {
+  const checkStatus = checkBody(req.body, ["email", "password"]);
+  if (!checkStatus.status) {
+    res.json({ result: false, error: checkStatus.error });
+    return;
+  }
+
+  User.findOne({
+    email: req.body.email,
+  })
+    .then((user) => {
+      if (!user) {
+        res.json({ result: false, error: "User not found" });
+        return;
+      }
+
+      if (!bcrypt.compareSync(req.body.password, user.password)) {
+        res.json({ result: false, error: "Wrong password" });
+        return;
+      }
+
+      res.json({ result: true, token: user.token });
     })
     .catch((error) => {
       console.error(error);
