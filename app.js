@@ -12,6 +12,7 @@ var usersRouter = require("./routes/users");
 var treesRouter = require("./routes/trees");
 var membersRouter = require("./routes/members");
 var uploadRouter = require("./routes/upload");
+var groupsRouter = require("./routes/groups");
 
 var app = express();
 
@@ -29,5 +30,6 @@ app.use("/users", usersRouter);
 app.use("/trees", treesRouter);
 app.use("/members", membersRouter);
 app.use("/upload", uploadRouter);
+app.use("/groups", groupsRouter);
 
 module.exports = app;

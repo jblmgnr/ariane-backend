@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const Group = require("../models/group");
+const Group = require("../models/groups");
 const { checkBody } = require("../modules/checkBody");
 
 //===============================================================
@@ -49,3 +49,5 @@ router.get("/", async (req, res) => {
     res.json({ result: false, error });
   }
 });
+
+module.exports = router;
