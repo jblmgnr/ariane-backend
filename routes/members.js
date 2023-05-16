@@ -42,14 +42,12 @@ router.post("/addmember", async (req, res) => {
 //===============================================================
 // DELETE : :id
 //===============================================================
-
 router.delete("/:id", async (req, res) => {
   try {
-    const member = await Member.findById(req.params.id);
-    await member.delete();
-    res.json({ result: true, data: member });
-  } catch (err) {
-    res.json({ result: false, error: err.message });
+    const result = await Member.deleteOne({ _id: req.params.id });
+    res.json({ result: true, member: result });
+  } catch (error) {
+    res.json({ result: false, error });
   }
 });
 
