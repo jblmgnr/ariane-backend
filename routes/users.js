@@ -7,7 +7,7 @@ const uid2 = require("uid2");
 const bcrypt = require("bcrypt");
 
 //===============================================================
-// POST : signin
+// POST : signup
 //===============================================================
 router.post("/signup", (req, res) => {
   const checkStatus = checkBody(req.body, [
@@ -38,9 +38,10 @@ router.post("/signup", (req, res) => {
         token: uid2(32),
         autoLogin: false,
         member: null,
+        tree: null,
       });
       newUser.save().then((data) => {
-        res.json({ result: true, token: data.token });
+        res.json({ result: true, data });
       });
     })
     .catch((error) => {
@@ -73,7 +74,7 @@ router.post("/signin", (req, res) => {
         return;
       }
 
-      res.json({ result: true, token: user.token });
+      res.json({ result: true, user });
     })
     .catch((error) => {
       console.error(error);
