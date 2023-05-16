@@ -51,4 +51,17 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+//===============================================================
+// GET: all members
+//===============================================================
+
+router.get("/", async (req, res) => {
+  try {
+    const members = await Member.find();
+    res.json({ result: true, members });
+  } catch (error) {
+    res.json({ result: false, error });
+  }
+});
+
 module.exports = router;
