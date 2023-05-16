@@ -74,6 +74,7 @@ router.post("/signin", (req, res) => {
         return;
       }
 
+      console.log("user : ", user);
       res.json({ result: true, user });
     })
     .catch((error) => {
