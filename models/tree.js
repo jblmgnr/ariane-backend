@@ -4,6 +4,6 @@ const treeSchema = mongoose.Schema({
   name: String,
 });
 
-const User = mongoose.model("trees", treeSchema);
+const Tree = mongoose.model("trees", treeSchema);
 
 module.exports = Tree;

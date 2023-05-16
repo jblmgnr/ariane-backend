@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-const User = require("../models/users");
+const Member = require("../models/members");
 const { checkBody } = require("../modules/checkBody");
 const uid2 = require("uid2");
 const bcrypt = require("bcrypt");
@@ -35,8 +35,22 @@ router.post("/addmember", async (req, res) => {
     group_ID: req.body.group_ID,
   });
   newMember.save().then((data) => {
-    res.json({ result: true, token: data.token });
+    res.json({ result: true, data });
   });
+});
+
+//===============================================================
+// DELETE : :id
+//===============================================================
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const member = await Member.findById(req.params.id);
+    await member.delete();
+    res.json({ result: true, data: member });
+  } catch (err) {
+    res.json({ result: false, error: err.message });
+  }
 });
 
 module.exports = router;
