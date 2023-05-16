@@ -73,7 +73,7 @@ router.post("/signin", (req, res) => {
         res.json({ result: false, error: "Wrong password" });
         return;
       }
-
+      console.log(user);
       res.json({ result: true, user });
     })
     .catch((error) => {

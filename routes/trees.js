@@ -44,6 +44,7 @@ router.post("/", async (req, res) => {
     .then((user) => {
       user.tree = newTree._id;
       user.save();
+      res.json({ result: true, user });
     })
     .catch((error) => {
       console.error(error);
