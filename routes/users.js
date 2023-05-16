@@ -40,8 +40,8 @@ router.post("/signup", (req, res) => {
         member: null,
         tree: null,
       });
-      newUser.save().then((data) => {
-        res.json({ result: true, data });
+      newUser.save().then((user) => {
+        res.json({ result: true, user });
       });
     })
     .catch((error) => {
@@ -73,7 +73,8 @@ router.post("/signin", (req, res) => {
         res.json({ result: false, error: "Wrong password" });
         return;
       }
-      console.log(user);
+
+      console.log("user : ", user);
       res.json({ result: true, user });
     })
     .catch((error) => {
