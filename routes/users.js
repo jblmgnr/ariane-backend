@@ -40,8 +40,8 @@ router.post("/signup", (req, res) => {
         member: null,
         tree: null,
       });
-      newUser.save().then((data) => {
-        res.json({ result: true, data });
+      newUser.save().then((user) => {
+        res.json({ result: true, user });
       });
     })
     .catch((error) => {
