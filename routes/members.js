@@ -3,40 +3,66 @@ var router = express.Router();
 
 const Member = require("../models/members");
 const { checkBody } = require("../modules/checkBody");
-const uid2 = require("uid2");
-const bcrypt = require("bcrypt");
 
 //===============================================================
 // POST : addmember
 //===============================================================
-
-router.post("/addmember", async (req, res) => {
+router.post("/", async (req, res) => {
+  console.log("In router add member ... : try to create : ", req.body);
   const checkStatus = checkBody(req.body, ["firstName", "lastName"]);
+
   if (!checkStatus.status) {
     res.json({ result: false, error: checkStatus.error });
     return;
   }
-
-  const newMember = new Member({
+  const toCheck = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     nickName: req.body.nickName,
-    birthDate: req.body.birthDate,
-    phoneNumber: req.body.phoneNumber,
-    currentCity: req.body.currentCity,
-    birthCity: req.body.birthCity,
-    job: req.body.job,
-    hobbies: req.body.hobbies,
-    story: req.body.story,
-    photo: req.body.photo,
-    relation_ID: req.body.relation_ID,
-    relationship: req.body.relationship,
-    gender: String,
-    group_ID: req.body.group_ID,
-  });
-  newMember.save().then((data) => {
-    res.json({ result: true, data });
-  });
+  };
+
+  console.log("TO CHECK ", toCheck);
+  // Check if the user has not already been registered
+  Member.findOne(toCheck)
+    .then((data) => {
+      if (data !== null) {
+        res.json({
+          result: false,
+          error:
+            "Member already exists with same firsname, lastname and nickname",
+        });
+        return;
+      }
+
+      const newMember = new Member({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        nickName: req.body.nickName,
+        birthDate: req.body.birthDate,
+        birthDate: req.body.birthDate,
+        phoneNumber: req.body.phoneNumber,
+        birthCity: req.body.birthCity,
+        currentCity: req.body.currentCity,
+        job: req.body.job,
+        hobbies: req.body.hobbies,
+        story: req.body.story,
+        photo: req.body.photo,
+        father: req.body.father,
+        mother: req.body.mother,
+        gender: req.body.gender,
+        group: req.body.group,
+      });
+      newMember.save().then((data) => {
+        res.json({ result: true, data });
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.json({
+        result: false,
+        error: "While accessing MongoDB Database",
+      });
+    });
 });
 
 //===============================================================
@@ -58,6 +84,7 @@ router.delete("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const members = await Member.find();
+    console.log("Return ", members.length, " members.");
     res.json({ result: true, members });
   } catch (error) {
     res.json({ result: false, error });
