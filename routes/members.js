@@ -35,6 +35,7 @@ router.post("/", async (req, res) => {
       }
 
       const newMember = new Member({
+        tree: req.body.tree,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         nickName: req.body.nickName,
@@ -66,7 +67,7 @@ router.post("/", async (req, res) => {
 });
 
 //===============================================================
-// DELETE : :id
+// DELETE /:id
 //===============================================================
 router.delete("/:id", async (req, res) => {
   try {
@@ -80,10 +81,26 @@ router.delete("/:id", async (req, res) => {
 //===============================================================
 // GET: all members
 //===============================================================
-
 router.get("/", async (req, res) => {
   try {
     const members = await Member.find();
+    console.log("Return ", members.length, " members.");
+    res.json({ result: true, members });
+  } catch (error) {
+    res.json({ result: false, error });
+  }
+});
+
+//===============================================================
+// GET /byTree/:treeId : all members belonging of given tree
+//===============================================================
+router.get("/byTree/:treeId", async (req, res) => {
+  try {
+    console.log(
+      "==============+> Look for members belonging to tree with id : ",
+      req.params.treeId
+    );
+    const members = await Member.find({ tree: req.params.treeId });
     console.log("Return ", members.length, " members.");
     res.json({ result: true, members });
   } catch (error) {

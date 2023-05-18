@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
 
           console.log("req.body.userId ", req.body.userId);
           if (!(req.body.userId && req.body.userId.length)) {
-            res.json({ result: true, data: dataTree });
+            res.json({ result: true, tree: dataTree });
             return;
           }
 
@@ -49,14 +49,13 @@ router.post("/", async (req, res) => {
               if (!user) {
                 res.json({
                   result: false,
-                  error: "No user exists with id ",
-                  userId,
+                  error: "No user exists with id " + req.body.userId,
                 });
                 return;
               }
               user.tree = newTree._id;
               user.save();
-              res.json({ result: true, data: dataTree });
+              res.json({ result: true, tree: dataTree });
               return;
             })
             .catch((error) => {
