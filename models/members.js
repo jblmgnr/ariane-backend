@@ -8,22 +8,18 @@ const memberSchema = mongoose.Schema({
   birthDate: Date,
   deathDate: Date,
   phoneNumber: String,
-  birthCity: [
-    {
-      name: String,
-      latitude: Number,
-      longitude: Number,
-      _id: false,
-    },
-  ],
-  currentCity: [
-    {
-      name: String,
-      latitude: Number,
-      longitude: Number,
-      _id: false,
-    },
-  ],
+  birthCity: {
+    name: String,
+    latitude: Number,
+    longitude: Number,
+    _id: false,
+  },
+  currentCity: {
+    name: String,
+    latitude: Number,
+    longitude: Number,
+    _id: false,
+  },
   job: String,
   hobbies: [String],
   story: String,
