@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
         lastName: req.body.lastName,
         nickName: req.body.nickName,
         birthDate: req.body.birthDate,
-        birthDate: req.body.birthDate,
+        deathDate: req.body.deathDate,
         phoneNumber: req.body.phoneNumber,
         birthCity: req.body.birthCity,
         currentCity: req.body.currentCity,
@@ -50,6 +50,7 @@ router.post("/", async (req, res) => {
         photo: req.body.photo,
         father: req.body.father,
         mother: req.body.mother,
+        partner: req.body.partner,
         gender: req.body.gender,
         group: req.body.group,
       });
@@ -102,6 +103,7 @@ router.get("/byTree/:treeId", async (req, res) => {
     );
     const members = await Member.find({ tree: req.params.treeId });
     console.log("Return ", members.length, " members.");
+    for (let m of members) console.log(m.firstName + " " + m.lastName);
     res.json({ result: true, members });
   } catch (error) {
     res.json({ result: false, error });

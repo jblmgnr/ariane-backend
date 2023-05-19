@@ -30,6 +30,7 @@ const memberSchema = mongoose.Schema({
   photo: String,
   father: { type: mongoose.Schema.Types.ObjectId, ref: "members" },
   mother: { type: mongoose.Schema.Types.ObjectId, ref: "members" },
+  partner: { type: mongoose.Schema.Types.ObjectId, ref: "members" },
   relationship: String,
   gender: String,
   group: [{ type: mongoose.Schema.Types.ObjectId, ref: "groups" }],
