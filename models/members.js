@@ -5,11 +5,25 @@ const memberSchema = mongoose.Schema({
   firstName: String,
   lastName: String,
   nickName: String,
-  brirthDate: Date,
+  birthDate: Date,
   deathDate: Date,
   phoneNumber: String,
-  birthCity: String,
-  currentCity: String,
+  birthCity: [
+    {
+      name: String,
+      latitude: Number,
+      longitude: Number,
+      _id: false,
+    },
+  ],
+  currentCity: [
+    {
+      name: String,
+      latitude: Number,
+      longitude: Number,
+      _id: false,
+    },
+  ],
   job: String,
   hobbies: [String],
   story: String,
