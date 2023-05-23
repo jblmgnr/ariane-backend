@@ -48,14 +48,15 @@ router.post("/", async (req, res) => {
         hobbies: req.body.hobbies,
         story: req.body.story,
         photo: req.body.photo,
+        sameBlood: req.body.sameBlood,
         father: req.body.father,
         mother: req.body.mother,
         partner: req.body.partner,
         gender: req.body.gender,
         group: req.body.group,
       });
-      newMember.save().then((data) => {
-        res.json({ result: true, data });
+      newMember.save().then((newMember) => {
+        res.json({ result: true, newMember });
       });
     })
     .catch((error) => {

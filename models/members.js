@@ -24,6 +24,7 @@ const memberSchema = mongoose.Schema({
   hobbies: [String],
   story: String,
   photo: String,
+  sameBlood: Boolean,
   father: { type: mongoose.Schema.Types.ObjectId, ref: "members" },
   mother: { type: mongoose.Schema.Types.ObjectId, ref: "members" },
   partner: { type: mongoose.Schema.Types.ObjectId, ref: "members" },
