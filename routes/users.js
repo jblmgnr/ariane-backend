@@ -38,7 +38,7 @@ router.post("/signup", (req, res) => {
         token: uid2(32),
         autoLogin: false,
         member: null,
-        tree: null,
+        tree: req.body.tree,
       });
       newUser.save().then((user) => {
         res.json({ result: true, user });
