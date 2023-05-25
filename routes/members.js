@@ -69,6 +69,63 @@ router.post("/", async (req, res) => {
 });
 
 //===============================================================
+// PUT : Modify an existing member
+//===============================================================
+router.put("/", async (req, res) => {
+  console.log("In router modify member ... : try to save : ", req.body);
+  const checkStatus = checkBody(req.body, ["firstName", "lastName"]);
+
+  if (!checkStatus.status) {
+    res.json({ result: false, error: checkStatus.error });
+    return;
+  }
+  const toCheck = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    nickName: req.body.nickName,
+  };
+
+  Member.findById(req.body._id).then((data) => {
+    if (data === null) {
+      res.json({
+        result: false,
+        error:
+          "Member with id " + req.body._id + " should already exists in DB",
+      });
+      return;
+    }
+
+    Member.updateOne(
+      { _id: req.body._id },
+      {
+        tree: req.body.tree,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        nickName: req.body.nickName,
+        birthDate: req.body.birthDate,
+        deathDate: req.body.deathDate,
+        phoneNumber: req.body.phoneNumber,
+        birthCity: req.body.birthCity,
+        currentCity: req.body.currentCity,
+        job: req.body.job,
+        hobbies: req.body.hobbies,
+        story: req.body.story,
+        photo: req.body.photo,
+        sameBlood: req.body.sameBlood,
+        father: req.body.father,
+        mother: req.body.mother,
+        partner: req.body.partner,
+        gender: req.body.gender,
+        group: req.body.group,
+      }
+    ).then((data) => {
+      res.json({ result: true });
+      return;
+    });
+  });
+});
+
+//===============================================================
 // DELETE /:id
 //===============================================================
 router.delete("/:id", async (req, res) => {
